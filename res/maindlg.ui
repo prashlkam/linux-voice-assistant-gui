@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Laxmi</class>
+ <widget class="QDialog" name="Laxmi">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>532</width>
+    <height>740</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Laxmi -  Voice Assistant</string>
+  </property>
+  <widget class="QTextEdit" name="outputtext">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>60</y>
+     <width>531</width>
+     <height>381</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="copy">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>470</y>
+     <width>112</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="mic">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>450</y>
+     <width>141</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Mic</string>
+   </property>
+   <property name="icon">
+    <iconset theme="./img/mic.jpg"/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ask">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>470</y>
+     <width>108</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ask/Run</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="settings">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>580</y>
+     <width>112</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="quit">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>640</y>
+     <width>91</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="help">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>580</y>
+     <width>112</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Help</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>80</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Text</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

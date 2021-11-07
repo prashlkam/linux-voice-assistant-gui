@@ -1,0 +1,7 @@
+pyqt5
+pyttsx3
+pywhatkit
+pyjokes
+speechrecognition
+datetime
+
