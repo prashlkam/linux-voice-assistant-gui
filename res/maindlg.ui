@@ -6,23 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
+    <width>541</width>
     <height>740</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Laxmi -  Voice Assistant</string>
   </property>
-  <widget class="QTextEdit" name="outputtext">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>60</y>
-     <width>531</width>
-     <height>381</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="copy">
    <property name="geometry">
     <rect>
@@ -49,7 +39,14 @@
     <string>Mic</string>
    </property>
    <property name="icon">
-    <iconset theme="./img/mic.jpg"/>
+    <iconset>
+     <normaloff>img/mic.jpg</normaloff>img/mic.jpg</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>110</width>
+     <height>110</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="ask">
@@ -115,6 +112,23 @@
    </property>
    <property name="text">
     <string>Text</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="outputtext">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>521</width>
+     <height>361</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
   </widget>
  </widget>
