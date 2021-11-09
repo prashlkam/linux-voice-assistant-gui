@@ -1,5 +1,6 @@
 import sys
 import os
+# from livavoice.py import LivaVoice as lv
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -18,6 +19,7 @@ class LinuxVoiceAssistant(QDialog):
 		self.settings.clicked.connect(self.settings_func)
 		self.quit.clicked.connect(self.quit_app)
 		self.show()
+		# livo = lv.LivaVoice()
 	
 	
 	def copy_clpboard(self):
@@ -35,10 +37,10 @@ class LinuxVoiceAssistant(QDialog):
 		self.close()
 	
 	def exec_cmd(self):
-		# talk("Executing command " + cmdtorun)
+		# executes final part of utterance
 		cmdtorun = self.outputtext.toPlainText()
-		QMessageBox.about(self, "Alert", "Executing: " + cmdtorun)
 		os.popen(cmdtorun)
+		QMessageBox.about(self, "Alert", "Executing: " + cmdtorun)
 	
 	def liva_run():
 		pass
