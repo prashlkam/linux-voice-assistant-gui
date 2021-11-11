@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/prashanth/Documents/Projects/laxmi-voice-assistant"
+VIRTUAL_ENV="/home/prashanth/Documents/Projects/linux-voice-assistant-gui"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -54,7 +54,7 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
-    PS1="(laxmi-voice-assistant) ${PS1:-}"
+    PS1="(linux-voice-assistant-gui) ${PS1:-}"
     export PS1
 fi
 
