@@ -13,8 +13,10 @@ class LivaVoice():
 		self.listener = sr.Recognizer()
 		self.engine = pyttsx3.init()
 		self.voices = self.engine.getProperty('voices')
-		self.engine.setProperty('voice', self.voices[0].id)
+		self.engine.setProperty('rate', 178)
+		self.engine.setProperty('voice', self.voices[2].id)
 		
+	
 	def talk(self, text):
 		self.engine.say(text)
 		self.engine.runAndWait()
