@@ -28,7 +28,7 @@ class LinuxVoiceAssistant(QDialog):
 	
 	def help_func(self):
 		# replace ls with man page for liva - TBD
-		os.popen("konsole -e man ls")
+		os.popen("xterm -e man ls")
 	
 	def settings_func(self):
 		QMessageBox.about(self, "Alert", "Not yet implemented...")
@@ -42,10 +42,10 @@ class LinuxVoiceAssistant(QDialog):
 		os.popen(cmdtorun)
 		QMessageBox.about(self, "Alert", "Executing: " + cmdtorun)
 	
-	def liva_run():
+	def liva_run(self):
 		pass
 		
-	def take_command():
+	def take_command(self):
 		pass
 		
 

@@ -1,4 +1,5 @@
 import speech_recognition as sr
+import pyaudio
 import pyttsx3
 import pywhatkit
 import datetime
@@ -13,8 +14,8 @@ class LivaVoice():
 		self.listener = sr.Recognizer()
 		self.engine = pyttsx3.init()
 		self.voices = self.engine.getProperty('voices')
-		self.engine.setProperty('rate', 178)
-		self.engine.setProperty('voice', self.voices[2].id)
+		self.engine.setProperty('voice','english+f3')
+		# self.engine.setProperty('voice',self.vices[2].id)
 		
 	
 	def talk(self, text):
