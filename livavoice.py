@@ -24,113 +24,114 @@ class LivaVoice():
 	
 	
 	def take_command(self):
-		command = ''
+		self.command = ''
 		try:
 			with sr.Microphone() as source:
 				print('listening...')
-				voice = listener.listen(source)
-				command = listener.recognize_google(voice)
-				command = command.lower()
-				if 'liva' in command:
-					command = command.replace('liva ', '')
-					print(command)
-		except:
-			pass
+				voice = self.listener.listen(source)
+				self.command = self.listener.recognize_google(voice)
+				self.command = self.command.lower()
+				if 'liva' in self.command:
+					self.command = self.command.replace('liva ', '')
+					print(self.command)
+		except Exception as e:
+			print("Exception: " + str(e))
+			# pass
 		# self.outputtext.setText(command)
-		return command
+		return self.command
 	
-	def liva_run(self):
-		command = ''
-		command = self.take_command()
-		resulttoshow = ''
+	def liva_run(self, cmd):
+		self.command = cmd
+		if self.command == '':
+			self.command = self.take_command()
+		self.resulttoshow = ''
 		# print(command)
-		if 'run' in command:
-			cmdtorun = command.replace('run ', '')
+		if 'run' in self.command:
+			self.command = self.command.replace('run ', '')
 			# exec_cmd(cmdtorun)
-		elif 'launch' in command:
-			cmdtorun = command.replace('launch ', '')
+		elif 'launch' in self.command:
+			self.command = self.command.replace('launch ', '')
 			# exec_cmd(cmdtorun)
-		elif 'play' in command:
-			song = command.replace('play ', '')
-			self.talk('playing ' + song)
-			pywhatkit.playonyt(song)
-		elif 'who is' in command:
-			person = command.replace('who is ', '')
-			info = wikipedia.summary(person, 3)
+		elif 'play' in self.command:
+			self.command = self.command.replace('play ', '')
+			self.talk('playing ' + self.command)
+			pywhatkit.playonyt(self.command)
+		elif 'who is' in self.command:
+			self.command = self.command.replace('who is ', '')
+			info = wikipedia.summary(self.command, 3)
 			# print(info)
 			# self.outputtext.setText(info)
-			resulttoshow = info
+			self.resulttoshow = info
 			self.talk(info)
-		elif 'what is' in command:
-			thing = command.replace('what is ', '')
-			info = wikipedia.summary(thing, 3)
+		elif 'what is' in self.command:
+			self.command = self.command.replace('what is ', '')
+			info = wikipedia.summary(self.command, 3)
 			# print(info)
 			# self.outputtext.setText(info)
-			resulttoshow = info
+			self.resulttoshow = info
 			self.talk(info)
-		elif 'where is' in command:
-			place = command.replace('where is ', '')
-			info = wikipedia.summary(place, 3)
+		elif 'where is' in self.command:
+			self.command = self.command.replace('where is ', '')
+			info = wikipedia.summary(self.command, 3)
 			# print(info)
 			# self.outputtext.setText(info)
-			resulttoshow = info
+			self.resulttoshow = info
 			self.talk(info)
-		elif 'how to' in command:
-			qstn = command.replace('how to ', '')
+		elif 'how to' in self.command:
+			self.command = self.command.replace('how to ', '')
 			# QMessageBox.about(self, "Alert", 'searching how to ' + qstn)
-			self.talk('searching how to ' + qstn)
-			pywhatkit.search(qstn)
-		elif 'get information' in command:
-			qstn = command.replace('get information ', '')
+			self.talk('searching how to ' + self.command)
+			pywhatkit.search(self.command)
+		elif 'get information' in self.command:
+			self.command = self.command.replace('get information ', '')
 			# QMessageBox.about(self, "Alert", 'Getting information: ' + qstn)
-			self.talk('getting information ' + qstn)
-			pywhatkit.search(qstn)
-		elif 'search information' in command:
-			qstn = command.replace('search information ', '')
+			self.talk('getting information ' + self.command)
+			pywhatkit.search(self.command)
+		elif 'search information' in self.command:
+			self.command = self.command.replace('search information ', '')
 			# QMessageBox.about(self, "Alert", 'Searching information: ' + qstn)
-			self.talk('searching information ' + qstn)
-			pywhatkit.search(qstn)
-		elif 'get info' in command:
-			qstn = command.replace('get info ', '')
+			self.talk('searching information ' + self.command)
+			pywhatkit.search(self.command)
+		elif 'get info' in self.command:
+			self.command = self.command.replace('get info ', '')
 			# QMessageBox.about(self, "Alert", 'Getting info: ' + qstn)
-			self.talk('getting info ' + qstn)
-			pywhatkit.info(qstn)
-		elif 'search info' in command:
-			qstn = command.replace('search info ', '')
+			self.talk('getting info ' + self.command)
+			pywhatkit.info(self.command)
+		elif 'search info' in self.command:
+			self.command = self.command.replace('search info ', '')
 			# QMessageBox.about(self, "Alert", 'Searching info: ' + qstn)
-			self.talk('searching info ' + qstn)
-			pywhatkit.info(qstn)
-		elif 'time' in command:
+			self.talk('searching info ' + self.command)
+			pywhatkit.info(self.command)
+		elif 'time' in self.command:
 			time = datetime.datetime.now().strftime('%I:%M %p')
 			# QMessageBox.about(self, "Alert", 'Current time: ' + time)
-			resulttoshow = 'Current time: ' + time
+			self.resulttoshow = 'Current time: ' + time
 			self.talk('Current time is ' + time)
-		elif 'date' in command:
+		elif 'date' in self.command:
 			date = datetime.datetime.now().strftime('%d %B %Y')
 			# QMessageBox.about(self, "Alert", 'Current date: ' + date)
-			resulttoshow = 'Current date: ' + date
+			self.resulttoshow = 'Current date: ' + date
 			self.talk('Current date is ' + date)
-		elif 'joke' in command:
+		elif 'joke' in self.command:
 			joke = pyjokes.get-joke()
 			# self.outputtext.setText(joke)
-			resulttoshow = joke
+			self.resulttoshow = joke
 			self.talk(joke)
-		elif 'liva are you single' in command:
-			resulttoshow = 'I am in a relationship with Tux...'
+		elif 'liva are you single' in self.command:
+			self.resulttoshow = 'I am in a relationship with Tux...'
 			self.talk('I am in a relationship with Tux...')
 		else:
 			# QMessageBox.about(self, "Alert", 'I didn\'t get you. Please say the command again...')
-			resulttoshow = ''
+			self.resulttoshow = ''
 			self.talk('I didn\'t get you. Please say the command again...')
 		
-		print('Command:\n--------\n' + command)
-		if resulttoshow == '':
-			resulttoshow = 'No Results to Show Here...'
-		print('Result:\n--------\n' + resulttoshow)
-		return command, resulttoshow
+		print('Command:\n--------\n' + self.command)
+		if self.resulttoshow == '':
+			self.resulttoshow = 'No Results to Show Here...'
+		print('Result:\n--------\n' + self.resulttoshow)
+		return self.command, self.resulttoshow
 		
 
 # main
 lv = LivaVoice()
-
-lv.liva_run()
+lv.liva_run('')
