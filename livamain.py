@@ -1,6 +1,6 @@
 import sys
 import os
-import LivaVoice as lv
+import livavoice as lv
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -19,7 +19,7 @@ class LinuxVoiceAssistant(QDialog):
 		self.settings.clicked.connect(self.settings_func)
 		self.quit.clicked.connect(self.quit_app)
 		self.show()
-		livo = lv.LivaVoice()
+		self.livo = lv.LivaVoice()
 	
 	
 	def copy_clpboard(self):
@@ -44,15 +44,15 @@ class LinuxVoiceAssistant(QDialog):
 	
 	def liva_run(self):
 		# code for Ask / Run button
-		disp_txt = []
+		disp_txt = ()
 		cmd = self.outputtext.toPlainText()
-		disp_txt = livo.liva_run(cmd)
-		self.outputtext.setText(disp_txt)
+		disp_txt = self.livo.liva_run(cmd)
+		self.outputtext.setPlainText(''.join(disp_txt))
 		
 	def take_command(self):
 		# code for mic button
-		cmd = livo.take_command()
-		self.outputtext.setText(cmd)
+		cmd = self.livo.take_command()
+		self.outputtext.setPlainText(cmd)
 		
 
 # main

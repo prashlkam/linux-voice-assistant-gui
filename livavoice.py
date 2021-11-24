@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import pyaudio
+import wave
 import pyttsx3
 import pywhatkit
 import datetime
@@ -16,7 +17,41 @@ class LivaVoice():
 		self.voices = self.engine.getProperty('voices')
 		self.engine.setProperty('voice','english+f3')
 		# self.engine.setProperty('voice',self.vices[2].id)
+		self.chunk = 1024  # Record in chunks of 1024 samples
+		self.sample_format = pyaudio.paInt16  # 16 bits per sample
+		self.channels = 2
+		self.fs = 44100  # Record at 44100 samples per second
+		self.seconds = 13
+		self.filename = "output.wav"
+		self.p = pyaudio.PyAudio()  # Create an interface to PortAudio
 		
+	
+	
+	def recaudio(self, filename):
+		print('Recording...')
+		stream = self.p.open(format=self.sample_format,
+						channels=self.channels,
+						rate=self.fs,
+						frames_per_buffer=self.chunk,
+						input=True)
+		frames = []  # Initialize array to store frames
+		# Store data in chunks for 3 seconds
+		for i in range(0, int(self.fs / self.chunk * self.seconds)):
+			data = stream.read(self.chunk)
+			frames.append(data)
+		# Stop and close the stream 
+		stream.stop_stream()
+		stream.close()
+		# Terminate the PortAudio interface
+		self.p.terminate()
+		print('Finished recording...')
+		# Save the recorded data as a WAV file
+		wf = wave.open(self.filename, 'wb')
+		wf.setnchannels(self.channels)
+		wf.setsampwidth(self.p.get_sample_size(self.sample_format))
+		wf.setframerate(self.fs)
+		wf.writeframes(b''.join(frames))
+		wf.close()
 	
 	def talk(self, text):
 		self.engine.say(text)
@@ -26,8 +61,10 @@ class LivaVoice():
 	def take_command(self):
 		self.command = ''
 		try:
-			with sr.Microphone() as source:
-				print('listening...')
+			self.recaudio(self.filename)
+			# with sr.Microphone(device_index=4) as source:
+			with sr.AudioFile(self.filename) as source:
+				# print('listening...')
 				voice = self.listener.listen(source)
 				self.command = self.listener.recognize_google(voice)
 				self.command = self.command.lower()
@@ -40,6 +77,13 @@ class LivaVoice():
 		# self.outputtext.setText(command)
 		return self.command
 	
+	def exec_cmd(self, command):
+		# executes final part of utterance
+		os.popen(command)
+		self.talk('Executing ' + command)
+		
+	
+	
 	def liva_run(self, cmd):
 		self.command = cmd
 		if self.command == '':
@@ -48,10 +92,10 @@ class LivaVoice():
 		# print(command)
 		if 'run' in self.command:
 			self.command = self.command.replace('run ', '')
-			# exec_cmd(cmdtorun)
+			self.exec_cmd(self.command)
 		elif 'launch' in self.command:
 			self.command = self.command.replace('launch ', '')
-			# exec_cmd(cmdtorun)
+			self.exec_cmd(self.command)
 		elif 'play' in self.command:
 			self.command = self.command.replace('play ', '')
 			self.talk('playing ' + self.command)
@@ -113,7 +157,7 @@ class LivaVoice():
 			self.resulttoshow = 'Current date: ' + date
 			self.talk('Current date is ' + date)
 		elif 'joke' in self.command:
-			joke = pyjokes.get-joke()
+			joke = pyjokes.get_joke(language="en", category="all")
 			# self.outputtext.setText(joke)
 			self.resulttoshow = joke
 			self.talk(joke)
@@ -133,5 +177,5 @@ class LivaVoice():
 		
 
 # main
-lv = LivaVoice()
-lv.liva_run('')
+# lv = LivaVoice()
+# lv.liva_run('')
