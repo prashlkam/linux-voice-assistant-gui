@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Laxmi -  Voice Assistant</string>
+   <string>Liva - Linux Voice Assistant</string>
   </property>
   <widget class="QPushButton" name="copy">
    <property name="geometry">

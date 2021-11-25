@@ -19,7 +19,7 @@ class LinuxVoiceAssistant(QDialog):
 		self.settings.clicked.connect(self.settings_func)
 		self.quit.clicked.connect(self.quit_app)
 		self.show()
-		self.livo = lv.LivaVoice()
+		# self.livo = lv.LivaVoice()
 	
 	
 	def copy_clpboard(self):
@@ -44,13 +44,17 @@ class LinuxVoiceAssistant(QDialog):
 	
 	def liva_run(self):
 		# code for Ask / Run button
-		disp_txt = ()
 		cmd = self.outputtext.toPlainText()
+		if cmd == '' or 'Command' in cmd and 'Result' in cmd:
+			self.livo = lv.LivaVoice()
+		disp_txt = ()
 		disp_txt = self.livo.liva_run(cmd)
-		self.outputtext.setPlainText(''.join(disp_txt))
+		displaytext = 'Command:- \n--------------- \n' + disp_txt[0] + '\nResult:- \n------------- \n' + disp_txt[1]
+		self.outputtext.setPlainText(''.join(displaytext))
 		
 	def take_command(self):
 		# code for mic button
+		self.livo = lv.LivaVoice()
 		cmd = self.livo.take_command()
 		self.outputtext.setPlainText(cmd)
 		

@@ -23,13 +23,13 @@ class LivaVoice():
 		self.fs = 44100  # Record at 44100 samples per second
 		self.seconds = 13
 		self.filename = "output.wav"
-		self.p = pyaudio.PyAudio()  # Create an interface to PortAudio
+		self.pyaud = pyaudio.PyAudio()  # Create an interface to PortAudio
 		
 	
 	
 	def recaudio(self, filename):
 		print('Recording...')
-		stream = self.p.open(format=self.sample_format,
+		stream = self.pyaud.open(format=self.sample_format,
 						channels=self.channels,
 						rate=self.fs,
 						frames_per_buffer=self.chunk,
@@ -43,12 +43,12 @@ class LivaVoice():
 		stream.stop_stream()
 		stream.close()
 		# Terminate the PortAudio interface
-		self.p.terminate()
+		self.pyaud.terminate()
 		print('Finished recording...')
 		# Save the recorded data as a WAV file
 		wf = wave.open(self.filename, 'wb')
 		wf.setnchannels(self.channels)
-		wf.setsampwidth(self.p.get_sample_size(self.sample_format))
+		wf.setsampwidth(self.pyaud.get_sample_size(self.sample_format))
 		wf.setframerate(self.fs)
 		wf.writeframes(b''.join(frames))
 		wf.close()
@@ -68,9 +68,6 @@ class LivaVoice():
 				voice = self.listener.listen(source)
 				self.command = self.listener.recognize_google(voice)
 				self.command = self.command.lower()
-				if 'liva' in self.command:
-					self.command = self.command.replace('liva ', '')
-					print(self.command)
 		except Exception as e:
 			print("Exception: " + str(e))
 			# pass
@@ -89,7 +86,9 @@ class LivaVoice():
 		if self.command == '':
 			self.command = self.take_command()
 		self.resulttoshow = ''
-		# print(command)
+		if 'liva' in self.command:
+			self.command = self.command.replace('liva ', '')
+		# print(self.command)
 		if 'run' in self.command:
 			self.command = self.command.replace('run ', '')
 			self.exec_cmd(self.command)
