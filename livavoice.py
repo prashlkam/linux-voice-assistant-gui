@@ -1,4 +1,5 @@
 import speech_recognition as sr
+from gnewsclient import gnewsclient
 import pyaudio
 import wave
 import pyttsx3
@@ -25,8 +26,6 @@ class LivaVoice():
 		self.filename = "output.wav"
 		self.pyaud = pyaudio.PyAudio()  # Create an interface to PortAudio
 		
-	
-	
 	def recaudio(self, filename):
 		print('Recording...')
 		stream = self.pyaud.open(format=self.sample_format,
@@ -78,8 +77,40 @@ class LivaVoice():
 		# executes final part of utterance
 		os.popen(command)
 		self.talk('Executing ' + command)
-		
 	
+	def exec_cmd_term(self, command):
+		# executes final part of utterance
+		os.popen('xterm -e ' + command)
+		self.talk('Executing in terminal ' + command)
+	
+	def man_page(self, command):
+		# executes final part of utterance
+		os.popen('xterm -e man ' + command)
+		self.talk('Showing man page for ' + command)
+	
+	# def weather_func(self, params):
+	def weather_func(self):
+		pass
+	
+	def load_params(self):
+		pass
+	
+	# def news_func(self, params):
+	def news_func(self):
+		# load params
+		# if params == []:
+			# params = load_params()
+		# declare a NewsClient object
+		client = gnewsclient.NewsClient(language='english', location='india', topic='National', max_results=8)
+		# get news feed
+		n = client.get_news()
+		titles = []
+		for i in n:
+			titles.append(i['title'] + '\n')
+		s = ''
+		for i in titles:
+			s += i
+		return s
 	
 	def liva_run(self, cmd):
 		self.command = cmd
@@ -88,13 +119,22 @@ class LivaVoice():
 		self.resulttoshow = ''
 		if 'liva' in self.command:
 			self.command = self.command.replace('liva ', '')
-		# print(self.command)
+		print('Command: ',self.command)
+		if 'run in terminal' in self.command:
+			self.command = self.command.replace('run in terminal ', '')
+			self.exec_cmd_term(self.command)
 		if 'run' in self.command:
 			self.command = self.command.replace('run ', '')
 			self.exec_cmd(self.command)
+		elif 'launch in terminal' in self.command:
+			self.command = self.command.replace('launch in terminal ', '')
+			self.exec_cmd_term(self.command)
 		elif 'launch' in self.command:
 			self.command = self.command.replace('launch ', '')
 			self.exec_cmd(self.command)
+		elif 'man page' in self.command:
+			self.command = self.command.replace('man page ', '')
+			self.man_page(self.command)
 		elif 'play' in self.command:
 			self.command = self.command.replace('play ', '')
 			self.talk('playing ' + self.command)
@@ -102,72 +142,64 @@ class LivaVoice():
 		elif 'who is' in self.command:
 			self.command = self.command.replace('who is ', '')
 			info = wikipedia.summary(self.command, 3)
-			# print(info)
-			# self.outputtext.setText(info)
 			self.resulttoshow = info
 			self.talk(info)
 		elif 'what is' in self.command:
 			self.command = self.command.replace('what is ', '')
 			info = wikipedia.summary(self.command, 3)
-			# print(info)
-			# self.outputtext.setText(info)
 			self.resulttoshow = info
 			self.talk(info)
 		elif 'where is' in self.command:
 			self.command = self.command.replace('where is ', '')
 			info = wikipedia.summary(self.command, 3)
-			# print(info)
-			# self.outputtext.setText(info)
 			self.resulttoshow = info
 			self.talk(info)
 		elif 'how to' in self.command:
 			self.command = self.command.replace('how to ', '')
-			# QMessageBox.about(self, "Alert", 'searching how to ' + qstn)
-			self.talk('searching how to ' + self.command)
 			pywhatkit.search(self.command)
+			self.talk('searching how to ' + self.command)
 		elif 'get information' in self.command:
 			self.command = self.command.replace('get information ', '')
-			# QMessageBox.about(self, "Alert", 'Getting information: ' + qstn)
-			self.talk('getting information ' + self.command)
 			pywhatkit.search(self.command)
+			self.talk('getting information ' + self.command)
 		elif 'search information' in self.command:
 			self.command = self.command.replace('search information ', '')
-			# QMessageBox.about(self, "Alert", 'Searching information: ' + qstn)
-			self.talk('searching information ' + self.command)
 			pywhatkit.search(self.command)
+			self.talk('searching information ' + self.command)
 		elif 'get info' in self.command:
 			self.command = self.command.replace('get info ', '')
-			# QMessageBox.about(self, "Alert", 'Getting info: ' + qstn)
-			self.talk('getting info ' + self.command)
 			pywhatkit.info(self.command)
+			self.talk('getting info ' + self.command)
 		elif 'search info' in self.command:
 			self.command = self.command.replace('search info ', '')
-			# QMessageBox.about(self, "Alert", 'Searching info: ' + qstn)
-			self.talk('searching info ' + self.command)
 			pywhatkit.info(self.command)
+			self.talk('searching info ' + self.command)
 		elif 'time' in self.command:
 			time = datetime.datetime.now().strftime('%I:%M %p')
-			# QMessageBox.about(self, "Alert", 'Current time: ' + time)
 			self.resulttoshow = 'Current time: ' + time
 			self.talk('Current time is ' + time)
 		elif 'date' in self.command:
 			date = datetime.datetime.now().strftime('%d %B %Y')
-			# QMessageBox.about(self, "Alert", 'Current date: ' + date)
 			self.resulttoshow = 'Current date: ' + date
 			self.talk('Current date is ' + date)
+		elif 'weather' in self.command:
+			weather = weather_func()
+			self.resulttoshow = weather
+			self.talk(weather)
+		elif 'news' in self.command:
+			news = self.news_func()
+			self.resulttoshow = news
+			self.talk(news)
 		elif 'joke' in self.command:
 			joke = pyjokes.get_joke(language="en", category="all")
-			# self.outputtext.setText(joke)
 			self.resulttoshow = joke
 			self.talk(joke)
 		elif 'liva are you single' in self.command:
 			self.resulttoshow = 'I am in a relationship with Tux...'
 			self.talk('I am in a relationship with Tux...')
 		else:
-			# QMessageBox.about(self, "Alert", 'I didn\'t get you. Please say the command again...')
 			self.resulttoshow = ''
 			self.talk('I didn\'t get you. Please say the command again...')
-		
 		print('Command:\n--------\n' + self.command)
 		if self.resulttoshow == '':
 			self.resulttoshow = 'No Results to Show Here...'
