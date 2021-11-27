@@ -1,5 +1,9 @@
 import speech_recognition as sr
 from gnewsclient import gnewsclient
+import python_weather
+import asyncio
+import requests
+import json
 import pyaudio
 import wave
 import pyttsx3
@@ -11,13 +15,13 @@ import pyjokes
 import os
 import sys
 
+
 class LivaVoice():
 	def __init__(self):
 		self.listener = sr.Recognizer()
 		self.engine = pyttsx3.init()
 		self.voices = self.engine.getProperty('voices')
 		self.engine.setProperty('voice','english+f3')
-		# self.engine.setProperty('voice',self.vices[2].id)
 		self.chunk = 1024  # Record in chunks of 1024 samples
 		self.sample_format = pyaudio.paInt16  # 16 bits per sample
 		self.channels = 2
@@ -89,9 +93,26 @@ class LivaVoice():
 		self.talk('Showing man page for ' + command)
 	
 	# def weather_func(self, params):
-	def weather_func(self):
-		pass
-	
+	async def weather_func(self):
+		# declare the client. format defaults to metric system (celcius, km/h, etc.)
+		client = python_weather.Client(format=python_weather.IMPERIAL)
+		# fetch a weather forecast from a city
+		city = "Bengaluru"
+		weather = await client.find(city)
+		# returns the current day's forecast temperature (int)
+		# print(weather.current.temperature)
+		# get the weather forecast for a few days
+		s = '' 
+		s = 'Location: ' + city + '\n'
+		s += 'Date/Time: ' + str(weather.current.date) + '\n'
+		s += 'Temprature: ' + str(round((weather.current.temperature - 32) * 5 / 9, 2)) + '°C\n'
+		s += 'Humidity: ' + str(weather.current.humidity) + '%\n'
+		s += 'Wind Speed: ' + str(round(weather.current.wind_speed * 0.621, 2)) + "KMPH\n"
+		s += 'Forecast: ' + weather.current.sky_text + '\n'        
+		# close the wrapper once done
+		await client.close()
+		return s
+		
 	def load_params(self):
 		pass
 	
@@ -183,13 +204,14 @@ class LivaVoice():
 			self.resulttoshow = 'Current date: ' + date
 			self.talk('Current date is ' + date)
 		elif 'weather' in self.command:
-			weather = weather_func()
-			self.resulttoshow = weather
-			self.talk(weather)
+			loop = asyncio.get_event_loop()
+			self.weather = loop.run_until_complete(self.weather_func())
+			self.resulttoshow = self.weather
+			self.talk(self.weather)
 		elif 'news' in self.command:
-			news = self.news_func()
-			self.resulttoshow = news
-			self.talk(news)
+			self.news = self.news_func()
+			self.resulttoshow = self.news
+			self.talk(self.news)
 		elif 'joke' in self.command:
 			joke = pyjokes.get_joke(language="en", category="all")
 			self.resulttoshow = joke
