@@ -1,0 +1,41 @@
+# liva Config file
+# =================
+
+{
+"Liva_options" : {
+    "config_file": "~/.config/liva/liva-config.json",
+    "terminal_emulator": "xterm",
+    "text_editor": "vim",
+    "language": "english"
+},
+"Pyttsx3_options" : {
+	"language": "english",
+    "gender": "female",
+    "rate": "90"
+},
+"Speechrecognition_options" : {
+    "speech_engine": "Google",
+    "audio_file": "~/.config/liva/tmp/liva_capture01.wav"
+},
+"Pyaudio_options" : {
+    "chunk": "1024",
+    "sample_format": "pyaudio.paInt16",
+    "channels": "2",
+    "fs": "44100",
+    "seconds": "13",
+    "audio_file": "~/.config/liva/tmp/liva_capture01.wav"
+},
+"Weather_options" : {
+	"location": "Bengaluru",
+    "temprature_unit": "Celcius",
+    "windspeed_unit": "KMPH"
+},
+"News_options" : {
+	"language": "english",
+	"location": "Bengaluru",
+    "country": "India",
+    "topic": "National",
+    "max_count": "8"
+}
+}
+

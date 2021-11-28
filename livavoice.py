@@ -30,6 +30,9 @@ class LivaVoice():
 		self.filename = "output.wav"
 		self.pyaud = pyaudio.PyAudio()  # Create an interface to PortAudio
 		
+	def load_params(self):
+		pass
+	
 	def recaudio(self, filename):
 		print('Recording...')
 		stream = self.pyaud.open(format=self.sample_format,
@@ -103,19 +106,16 @@ class LivaVoice():
 		# print(weather.current.temperature)
 		# get the weather forecast for a few days
 		s = '' 
-		s = 'Location: ' + city + '\n'
+		s = 'Location: ' + weather.location_name + '\n'
 		s += 'Date/Time: ' + str(weather.current.date) + '\n'
-		s += 'Temprature: ' + str(round((weather.current.temperature - 32) * 5 / 9, 2)) + '°C\n'
-		s += 'Humidity: ' + str(weather.current.humidity) + '%\n'
-		s += 'Wind Speed: ' + str(round(weather.current.wind_speed * 0.621, 2)) + "KMPH\n"
+		s += 'Temprature: ' + str(round((weather.current.temperature - 32) * 5 / 9, 2)) + ' °C\n'
+		s += 'Humidity: ' + str(weather.current.humidity) + ' %\n'
+		s += 'Wind Speed: ' + str(round(weather.current.wind_speed * 0.621, 2)) + " KMPH\n"
 		s += 'Forecast: ' + weather.current.sky_text + '\n'        
 		# close the wrapper once done
 		await client.close()
 		return s
 		
-	def load_params(self):
-		pass
-	
 	# def news_func(self, params):
 	def news_func(self):
 		# load params
@@ -152,6 +152,18 @@ class LivaVoice():
 			self.exec_cmd_term(self.command)
 		elif 'launch' in self.command:
 			self.command = self.command.replace('launch ', '')
+			self.exec_cmd(self.command)
+		elif 'open in terminal' in self.command:
+			self.command = self.command.replace('open in terminal ', '')
+			self.exec_cmd_term(self.command)
+		elif 'open' in self.command:
+			self.command = self.command.replace('open ', '')
+			self.exec_cmd(self.command)
+		elif 'start in terminal' in self.command:
+			self.command = self.command.replace('start in terminal ', '')
+			self.exec_cmd_term(self.command)
+		elif 'start' in self.command:
+			self.command = self.command.replace('start ', '')
 			self.exec_cmd(self.command)
 		elif 'man page' in self.command:
 			self.command = self.command.replace('man page ', '')
@@ -222,6 +234,7 @@ class LivaVoice():
 		else:
 			self.resulttoshow = ''
 			self.talk('I didn\'t get you. Please say the command again...')
+		# return values
 		print('Command:\n--------\n' + self.command)
 		if self.resulttoshow == '':
 			self.resulttoshow = 'No Results to Show Here...'
