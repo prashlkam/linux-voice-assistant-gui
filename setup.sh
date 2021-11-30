@@ -2,14 +2,27 @@
 
 ## Uncomment appropriate line as per your distro - and then run
 ## ============================================================
-# sudo dnf install -y python3-pip python3-pyaudio espeak
-# sudo apt-get install -y python3-pip python3-pyaudio espeak
-# paru -Sy python3-pip python3-pyaudio espeak
+
+
+# For Red Hat based distros...
+if ! dnf -V | grep -q 'Could not find Command'; then
+    sudo dnf install -y python3-pip python3-pyaudio espeak
+fi
+
+# For Debian based distros...
+if ! apt-get -V | grep -q 'Could not find Command'; then
+    sudo apt-get install -y python3-pip python3-pyaudio espeak
+fi
+
+# For Arch based distros...
+if ! pacman -V | grep -q 'Could not find Command'; then
+    sudo pacman -Syy python3-pip python3-pyaudio espeak
+fi
 
 ## same commands for all distros
 ## =================================
 pip -q install speechrecognition pyttsx3 pyqt5 pyaudio pywhatkit pyjokes datetime requests gnewsclient asyncio python-weather python-Levenshtein
-pip -q --no-input uninstall mouseinfo
+pip -q uninstall mouseinfo
 
 clear
 

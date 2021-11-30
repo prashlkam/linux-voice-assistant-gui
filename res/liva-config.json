@@ -1,6 +1,3 @@
-# liva Config file
-# =================
-
 {
 "Liva_options" : {
     "config_file": "~/.config/liva/liva-config.json",

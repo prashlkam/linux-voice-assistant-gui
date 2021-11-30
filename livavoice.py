@@ -15,23 +15,25 @@ import pyjokes
 import os
 import sys
 
-
 class LivaVoice():
 	def __init__(self):
+		self.load_params()
 		self.listener = sr.Recognizer()
 		self.engine = pyttsx3.init()
 		self.voices = self.engine.getProperty('voices')
-		self.engine.setProperty('voice','english+f3')
-		self.chunk = 1024  # Record in chunks of 1024 samples
-		self.sample_format = pyaudio.paInt16  # 16 bits per sample
-		self.channels = 2
-		self.fs = 44100  # Record at 44100 samples per second
-		self.seconds = 13
-		self.filename = "output.wav"
-		self.pyaud = pyaudio.PyAudio()  # Create an interface to PortAudio
+		self.engine.setProperty('voice',self.params['Pyttsx3_options']['language'] + '+f3')
+		self.chunk = int(self.params['Pyaudio_options']['chunk'])
+		if 'paInt16' in self.params['Pyaudio_options']['sample_format']:
+			self.sample_format = pyaudio.paInt16 
+		self.channels = int(self.params['Pyaudio_options']['channels'])
+		self.fs = int(self.params['Pyaudio_options']['fs'])
+		self.seconds = int(self.params['Pyaudio_options']['seconds'])
+		self.audiofilename = os.path.expanduser(self.params['Pyaudio_options']['audio_file'])
+		self.pyaud = pyaudio.PyAudio()
 		
 	def load_params(self):
-		pass
+		with open(os.path.expanduser('~/.config/liva/liva-config.json'), 'r') as jsf:
+			self.params = json.load(jsf)
 	
 	def recaudio(self, filename):
 		print('Recording...')
@@ -52,7 +54,7 @@ class LivaVoice():
 		self.pyaud.terminate()
 		print('Finished recording...')
 		# Save the recorded data as a WAV file
-		wf = wave.open(self.filename, 'wb')
+		wf = wave.open(self.audiofilename, 'wb')
 		wf.setnchannels(self.channels)
 		wf.setsampwidth(self.pyaud.get_sample_size(self.sample_format))
 		wf.setframerate(self.fs)
@@ -67,9 +69,9 @@ class LivaVoice():
 	def take_command(self):
 		self.command = ''
 		try:
-			self.recaudio(self.filename)
+			self.recaudio(self.audiofilename)
 			# with sr.Microphone(device_index=4) as source:
-			with sr.AudioFile(self.filename) as source:
+			with sr.AudioFile(self.audiofilename) as source:
 				# print('listening...')
 				voice = self.listener.listen(source)
 				self.command = self.listener.recognize_google(voice)
@@ -87,12 +89,14 @@ class LivaVoice():
 	
 	def exec_cmd_term(self, command):
 		# executes final part of utterance
-		os.popen('xterm -e ' + command)
+		term = self.params['Liva_options']['terminal_emulator']
+		os.popen(term + ' -e ' + command)
 		self.talk('Executing in terminal ' + command)
 	
 	def man_page(self, command):
 		# executes final part of utterance
-		os.popen('xterm -e man ' + command)
+		term = self.params['Liva_options']['terminal_emulator']
+		os.popen(term + ' -e man ' + command)
 		self.talk('Showing man page for ' + command)
 	
 	# def weather_func(self, params):
@@ -100,7 +104,7 @@ class LivaVoice():
 		# declare the client. format defaults to metric system (celcius, km/h, etc.)
 		client = python_weather.Client(format=python_weather.IMPERIAL)
 		# fetch a weather forecast from a city
-		city = "Bengaluru"
+		city = self.params['Weather_options']['location']
 		weather = await client.find(city)
 		# returns the current day's forecast temperature (int)
 		# print(weather.current.temperature)
@@ -108,9 +112,15 @@ class LivaVoice():
 		s = '' 
 		s = 'Location: ' + weather.location_name + '\n'
 		s += 'Date/Time: ' + str(weather.current.date) + '\n'
-		s += 'Temprature: ' + str(round((weather.current.temperature - 32) * 5 / 9, 2)) + ' °C\n'
+		if 'Celcius' in self.params['Weather_options']['temprature_unit']:
+			s += 'Temprature: ' + str(round((weather.current.temperature - 32) * 5 / 9, 2)) + ' °C\n'
+		else:
+			s += 'Temprature: ' + str(weather.current.temperature) + ' °F\n'
 		s += 'Humidity: ' + str(weather.current.humidity) + ' %\n'
-		s += 'Wind Speed: ' + str(round(weather.current.wind_speed * 0.621, 2)) + " KMPH\n"
+		if 'KMPH' in self.params['Weather_options']['windspeed_unit']:
+			s += 'Wind Speed: ' + str(round(weather.current.wind_speed * 0.621, 2)) + " KMPH\n"
+		else:
+			s += 'Wind Speed: ' + str(weather.current.wind_speed) + " MPH\n"
 		s += 'Forecast: ' + weather.current.sky_text + '\n'        
 		# close the wrapper once done
 		await client.close()
@@ -119,10 +129,9 @@ class LivaVoice():
 	# def news_func(self, params):
 	def news_func(self):
 		# load params
-		# if params == []:
-			# params = load_params()
+		newsopts = self.params['News_options']
 		# declare a NewsClient object
-		client = gnewsclient.NewsClient(language='english', location='india', topic='National', max_results=8)
+		client = gnewsclient.NewsClient(language=newsopts['language'], location=newsopts['location'], topic=newsopts['topic'], max_results=int(newsopts['max_count']))
 		# get news feed
 		n = client.get_news()
 		titles = []
@@ -170,8 +179,8 @@ class LivaVoice():
 			self.man_page(self.command)
 		elif 'play' in self.command:
 			self.command = self.command.replace('play ', '')
-			self.talk('playing ' + self.command)
 			pywhatkit.playonyt(self.command)
+			self.talk('playing ' + self.command)
 		elif 'who is' in self.command:
 			self.command = self.command.replace('who is ', '')
 			info = wikipedia.summary(self.command, 3)
