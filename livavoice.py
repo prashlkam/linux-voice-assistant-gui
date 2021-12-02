@@ -1,6 +1,7 @@
 import speech_recognition as sr
 from gnewsclient import gnewsclient
 import python_weather
+import subprocess 
 import asyncio
 import requests
 import json
@@ -78,8 +79,6 @@ class LivaVoice():
 				self.command = self.command.lower()
 		except Exception as e:
 			print("Exception: " + str(e))
-			# pass
-		# self.outputtext.setText(command)
 		return self.command
 	
 	def exec_cmd(self, command):
@@ -90,15 +89,9 @@ class LivaVoice():
 	def exec_cmd_term(self, command):
 		# executes final part of utterance
 		term = self.params['Liva_options']['terminal_emulator']
-		os.popen(term + ' -e ' + command)
+		os.popen(term + ' -hold -e ' + command)
 		self.talk('Executing in terminal ' + command)
-	
-	def man_page(self, command):
-		# executes final part of utterance
-		term = self.params['Liva_options']['terminal_emulator']
-		os.popen(term + ' -e man ' + command)
-		self.talk('Showing man page for ' + command)
-	
+		
 	# def weather_func(self, params):
 	async def weather_func(self):
 		# declare the client. format defaults to metric system (celcius, km/h, etc.)
@@ -151,32 +144,35 @@ class LivaVoice():
 			self.command = self.command.replace('liva ', '')
 		print('Command: ',self.command)
 		if 'run in terminal' in self.command:
-			self.command = self.command.replace('run in terminal ', '')
+			self.command = self.command.replace('run in terminal ', ' ')
 			self.exec_cmd_term(self.command)
 		if 'run' in self.command:
 			self.command = self.command.replace('run ', '')
 			self.exec_cmd(self.command)
 		elif 'launch in terminal' in self.command:
-			self.command = self.command.replace('launch in terminal ', '')
+			self.command = self.command.replace('launch in terminal ', ' ')
 			self.exec_cmd_term(self.command)
 		elif 'launch' in self.command:
 			self.command = self.command.replace('launch ', '')
 			self.exec_cmd(self.command)
 		elif 'open in terminal' in self.command:
-			self.command = self.command.replace('open in terminal ', '')
+			self.command = self.command.replace('open in terminal ', ' ')
 			self.exec_cmd_term(self.command)
 		elif 'open' in self.command:
 			self.command = self.command.replace('open ', '')
 			self.exec_cmd(self.command)
 		elif 'start in terminal' in self.command:
-			self.command = self.command.replace('start in terminal ', '')
+			self.command = self.command.replace('start in terminal ', ' ')
 			self.exec_cmd_term(self.command)
 		elif 'start' in self.command:
 			self.command = self.command.replace('start ', '')
 			self.exec_cmd(self.command)
-		elif 'man page' in self.command:
-			self.command = self.command.replace('man page ', '')
-			self.man_page(self.command)
+		elif 'man page ' in self.command:
+			self.command = self.command.replace('man page ', ' man ')
+			self.exec_cmd_term(self.command)
+		elif 'info page' in self.command:
+			self.command = self.command.replace('info page ', ' info ')
+			self.exec_cmd_term(self.command)
 		elif 'play' in self.command:
 			self.command = self.command.replace('play ', '')
 			pywhatkit.playonyt(self.command)

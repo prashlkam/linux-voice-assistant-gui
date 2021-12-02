@@ -1,6 +1,6 @@
 import sys
 import os
-import livavoice as lv
+import livavoice as liva
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -19,7 +19,7 @@ class LinuxVoiceAssistant(QDialog):
 		self.settings.clicked.connect(self.settings_func)
 		self.quit.clicked.connect(self.quit_app)
 		self.show()
-		self.livo = lv.LivaVoice()
+		self.liva_object = liva.LivaVoice()
 	
 	
 	def copy_clpboard(self):
@@ -46,19 +46,21 @@ class LinuxVoiceAssistant(QDialog):
 		# code for Ask / Run button
 		displaytext = ''
 		cmd = self.outputtext.toPlainText()
-		if cmd == '' or 'Command' in cmd and 'Result' in cmd:
+		if 'Command' in cmd and 'Result' in cmd:
+			self.ask.setText("Ask/Run")
 			self.outputtext.setPlainText('')
-			self.livo = lv.LivaVoice()
+			self.liva_object = liva.LivaVoice()
 		else:
 			disp_txt = []
-			disp_txt = self.livo.liva_run(cmd)
+			disp_txt = self.liva_object.liva_run(cmd)
 			displaytext = 'Command:- \n----------------- \n' + disp_txt[0] + '\nResult:- \n------------- \n' + disp_txt[1]
+			self.ask.setText("Reset")
 			self.outputtext.setPlainText(''.join(displaytext))
 	
 	def take_command(self):
 		# code for mic button
-		self.livo = lv.LivaVoice()
-		cmd = self.livo.take_command()
+		self.liva_object = liva.LivaVoice()
+		cmd = self.liva_object.take_command()
 		self.outputtext.setPlainText(cmd)
 		
 
