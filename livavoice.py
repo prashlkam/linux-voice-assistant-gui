@@ -79,17 +79,22 @@ class LivaVoice():
 				self.command = self.command.lower()
 		except Exception as e:
 			print("Exception: " + str(e))
+		if 'enabled' in self.params['Liva_options']['output_redirect_flag']:
+			if 'child_proc' in self.params['Liva_options']['output_redirect_application'] and not self.child_proc == None:
+				byte_output_string = self.command.encode('ascii')
+				self.child_proc.stdin.write(byte_output_string)
+				self.child_proc.stdin.flush()
 		return self.command
 	
 	def exec_cmd(self, command):
 		# executes final part of utterance
-		os.popen(command)
+		self.child_proc = subprocess.Popen(command, stdin=subprocess.PIPE)
 		self.talk('Executing ' + command)
 	
 	def exec_cmd_term(self, command):
 		# executes final part of utterance
 		term = self.params['Liva_options']['terminal_emulator']
-		os.popen(term + ' -hold -e ' + command)
+		self.child_proc = subprocess.Popen(term + ' -hold -e ' + command, stdin=subprocess.PIPE)
 		self.talk('Executing in terminal ' + command)
 		
 	# def weather_func(self, params):
@@ -233,6 +238,18 @@ class LivaVoice():
 			joke = pyjokes.get_joke(language="en", category="all")
 			self.resulttoshow = joke
 			self.talk(joke)
+		elif 'enable output redirection' in self.command:
+			self.params['Liva_options']['output_redirect_flag'] = 'enabled'
+			messg1 = 'Output redirection is now enabled. Anything you speak can now be captured by the application you open...'
+			print(messg1)
+			self.resulttoshow = messg1
+			self.talk(messg1)
+		elif 'disable output redirection' in self.command:
+			self.params['Liva_options']['output_redirect_flag'] = 'disabled'
+			messg1 = 'Output redirection is now disabled...'
+			print(messg1)
+			self.resulttoshow = messg1
+			self.talk(messg1)
 		elif 'liva are you single' in self.command:
 			self.resulttoshow = 'I am in a relationship with Tux...'
 			self.talk('I am in a relationship with Tux...')

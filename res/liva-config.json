@@ -3,7 +3,9 @@
     "config_file": "~/.config/liva/liva-config.json",
     "terminal_emulator": "xterm",
     "text_editor": "vim",
-    "language": "english"
+    "language": "english",
+    "output_redirect_flag": "disabled",
+    "output_redirect_process": "child_proc"
 },
 "Pyttsx3_options" : {
 	"language": "english",

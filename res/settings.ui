@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
+    <width>797</width>
     <height>252</height>
    </rect>
   </property>
@@ -18,12 +18,12 @@
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>80</width>
-     <height>26</height>
+     <width>191</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Speaker</string>
+    <string>Desktop Environment</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -31,12 +31,12 @@
     <rect>
      <x>20</x>
      <y>110</y>
-     <width>131</width>
+     <width>221</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Microphone</string>
+    <string>Text to Speech Config</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -44,48 +44,91 @@
     <rect>
      <x>20</x>
      <y>180</y>
-     <width>111</width>
+     <width>201</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
-    <string>STT Engine</string>
+    <string>Liva - Main Config File</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="decombo">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>40</y>
-     <width>103</width>
-     <height>32</height>
+     <x>270</x>
+     <y>31</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
+   <property name="currentText">
+    <string>Budgie</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Budgie</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Cinnamon</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GNOME</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MATE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Pantheon</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Plasma / KDE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Unity</string>
+    </property>
+   </item>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QComboBox" name="sttcombo">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>110</y>
-     <width>103</width>
-     <height>32</height>
+     <x>270</x>
+     <y>100</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QComboBox" name="comboBox_3">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>180</y>
-     <width>103</width>
-     <height>32</height>
-    </rect>
-   </property>
+   <item>
+    <property name="text">
+     <string>Google</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Bing / Azure</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>CMU Sphinx (local)</string>
+    </property>
+   </item>
   </widget>
   <widget class="QPushButton" name="ok">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>640</x>
      <y>70</y>
      <width>112</width>
      <height>36</height>
@@ -98,7 +141,7 @@
   <widget class="QPushButton" name="cancel">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>640</x>
      <y>140</y>
      <width>112</width>
      <height>36</height>
@@ -106,6 +149,45 @@
    </property>
    <property name="text">
     <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="desettings">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>40</y>
+     <width>112</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>DE Config</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sttconfig">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>110</y>
+     <width>112</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>STT Config</string>
+   </property>
+  </widget>
+  <widget class="QCommandLinkButton" name="livaconfig">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>170</y>
+     <width>321</width>
+     <height>42</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Liva - Main Configuration File.....</string>
    </property>
   </widget>
  </widget>
