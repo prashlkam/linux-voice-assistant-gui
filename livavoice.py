@@ -19,6 +19,8 @@ import sys
 class LivaVoice():
 	def __init__(self):
 		self.load_params()
+		self.recording_flag = False
+		# self.output_redirect_flag = self.params['Liva_options']['output_redirect_flag']
 		self.listener = sr.Recognizer()
 		self.engine = pyttsx3.init()
 		self.voices = self.engine.getProperty('voices')
@@ -33,10 +35,11 @@ class LivaVoice():
 		self.pyaud = pyaudio.PyAudio()
 		
 	def load_params(self):
-		with open(os.path.expanduser('~/.config/liva/liva-config.json'), 'r') as jsf:
+		with open(os.path.expanduser("~/.config/liva/liva-config.json"), 'r') as jsf:
 			self.params = json.load(jsf)
 	
 	def recaudio(self, filename):
+		self.recording_flag = True
 		print('Recording...')
 		stream = self.pyaud.open(format=self.sample_format,
 						channels=self.channels,
@@ -60,12 +63,12 @@ class LivaVoice():
 		wf.setsampwidth(self.pyaud.get_sample_size(self.sample_format))
 		wf.setframerate(self.fs)
 		wf.writeframes(b''.join(frames))
+		self.recording_flag = False
 		wf.close()
 	
 	def talk(self, text):
 		self.engine.say(text)
 		self.engine.runAndWait()
-	
 	
 	def take_command(self):
 		self.command = ''
@@ -79,11 +82,6 @@ class LivaVoice():
 				self.command = self.command.lower()
 		except Exception as e:
 			print("Exception: " + str(e))
-		if 'enabled' in self.params['Liva_options']['output_redirect_flag']:
-			if 'child_proc' in self.params['Liva_options']['output_redirect_application'] and not self.child_proc == None:
-				byte_output_string = self.command.encode('ascii')
-				self.child_proc.stdin.write(byte_output_string)
-				self.child_proc.stdin.flush()
 		return self.command
 	
 	def exec_cmd(self, command):
@@ -238,18 +236,6 @@ class LivaVoice():
 			joke = pyjokes.get_joke(language="en", category="all")
 			self.resulttoshow = joke
 			self.talk(joke)
-		elif 'enable output redirection' in self.command:
-			self.params['Liva_options']['output_redirect_flag'] = 'enabled'
-			messg1 = 'Output redirection is now enabled. Anything you speak can now be captured by the application you open...'
-			print(messg1)
-			self.resulttoshow = messg1
-			self.talk(messg1)
-		elif 'disable output redirection' in self.command:
-			self.params['Liva_options']['output_redirect_flag'] = 'disabled'
-			messg1 = 'Output redirection is now disabled...'
-			print(messg1)
-			self.resulttoshow = messg1
-			self.talk(messg1)
 		elif 'liva are you single' in self.command:
 			self.resulttoshow = 'I am in a relationship with Tux...'
 			self.talk('I am in a relationship with Tux...')
