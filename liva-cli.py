@@ -1,6 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
+import os
 import livavoice as liva
 
 def main():
@@ -13,20 +14,23 @@ def main():
     print('Press \'S\' or \'s\' for settings...')
     print('Press \'Q\' or \'q\' to quit...')
     opt = input(' Enter your choice: ')
-    
-    liva_obj = liva.LivaVoice()
-
-    
+         
     while not 'q' in opt[0].lower():
+		liva_obj = liva.LivaVoice()
+		os.system('clear')
         print('Start speaking when you see \'Recording...\'')
         print('Stop when you see \'Finished recording...\'')
+        input('Press <enter> when you\'re ready to start Recording...')
         cmd = liva_obj.take_command()
         print('\nWhat do you want to do with the Speech converted to Text? : ')
-        print('Press \'r\' to Run | \'a\' to Append to File | \'i\' for Instructions\n      \'s\' for Settings | \'q\' to Quit | Any other key to continue...')
+        print('Press \'r\' to Run | \'a\' to Append to File | \'i\' for Instructions\n      \'s\' for Settings | \'t\' to type Command\n      \'q\' to Quit | Any other key to continue...')
         opt = input('Enter your choice: ')
         if 'r' in opt[0].lower():
             liva_obj.run_liva(cmd)
-        elif 'a' in opt[0].lower():
+        elif 't' in opt[0].lower():
+			cmd = input('Type in the Command for Liva: ')
+			liva_obj.run_liva(cmd)
+		elif 'a' in opt[0].lower():
             append_file(cmd)
         elif 'i' in opt[0].lower():
             info_func()
@@ -35,13 +39,13 @@ def main():
         elif 'q' in opt[0].lower():
             exit()
         else:
-			input('Press <enter> to clear the Screen and proceed...')
+            input('Press <enter> to clear the Screen and proceed...')
             os.system('clear')
 
 def append_file(cmd):
     print('Appending text to file \'~/Documents/liva-conv01.txt\'...')
     with open(os.path.expanduser('~/Documents/liva-conv01.txt'),'a') as outfile:
-		outfile.write(cmd)
+        outfile.write(cmd)
 
 def info_func():
     print('Instructions to use Liva-cli more effectively...')
@@ -56,9 +60,8 @@ def info_func():
 
 def settings_func():
     print('Opening Settings file...')
-    cmd = 'open in terminal vim ~/.config/liva/liva-config.json'
-    liva_obj.liva_run(cmd)
-
+    term = 'xterm '
+    cmd = ' vim ~/.config/liva/liva-config.json'
+    os.popen(term + ' -hold -e ' + cmd)
 
 main()
-

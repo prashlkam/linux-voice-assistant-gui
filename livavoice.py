@@ -92,7 +92,8 @@ class LivaVoice():
 	def exec_cmd_term(self, command):
 		# executes final part of utterance
 		term = self.params['Liva_options']['terminal_emulator']
-		self.child_proc = subprocess.Popen(term + ' -hold -e ' + command, stdin=subprocess.PIPE)
+		# self.child_proc = subprocess.Popen(term + ' -hold -e ' + command, stdin=subprocess.PIPE)
+		self.child_proc = os.popen(term + ' -hold -e ' + command)
 		self.talk('Executing in terminal ' + command)
 		
 	# def weather_func(self, params):
