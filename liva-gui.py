@@ -3,33 +3,12 @@
 import sys
 import os
 import livavoice as liva
+import settingsdlg as liva_settings
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QWidget, QDialog, QApplication, QMessageBox, QLabel
 from PyQt5.Qt import QClipboard
-
-class ProgressPopup(QDialog):
-	"""Loading screen animation."""
-	def __init__(self):
-		super(ProgressPopup, self).__init__()
-		gif_path = './res/img/progress.gif'
-		self.dlg = QDialog()
-		self.dlg.setWindowTitle("Recording...")
-		self.dlg.setWindowModality(False)
-		self.dlg.setFixedSize(260, 260)
-		self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
-		self.label_animation = QLabel(self.dlg)
-		self.movie = QMovie(gif_path)
-		self.label_animation.setMovie(self.movie)
-	
-	def start_animation(self):
-		self.movie.start()
-		self.dlg.show()
-	
-	def stop_animation(self):
-		self.movie.stop()
-		self.dlg.done(0)
 
 class LinuxVoiceAssistant(QDialog):
 	def __init__(self):
@@ -55,7 +34,8 @@ class LinuxVoiceAssistant(QDialog):
 		os.popen("xterm -e man ls")
 	
 	def settings_func(self):
-		QMessageBox.about(self, "Alert", "Not yet implemented...")
+		self.settings_dialog = liva_settings.Settings()
+		self.settings_dialog.show()
 	
 	def quit_app(self):
 		self.close()
