@@ -1,2 +1,55 @@
-# linux-voice-assistant-gui
-linux-voice-assistant-gui - a utility that could mimic Cortana on the linux desktop.....
+
+
+Liva (linux voice assistant)
+
+ 
+
+linux-voice-assistant-gui - a utility that could mimic Cortana on the linux desktop...
+
+ 
+
+Features:
+
+Liva provides a basic set of Voice Assistant capabilities including...
+
+* Ability to Record Speech into an Audio file
+
+* Ability to define the Duration of Recording - by editing a config file
+
+* Ability to Convert the Recorded Speech into Text - using the Google Speech to Text API
+
+* Ability to set the Language for the Speech to Text as well as the Text to Speech Engines - by editing the config file
+
+* Once the Speech gets converted to text - it can be copied to the Clipboard (by clicking the Copy button). This text can be pasted into any Application that accepts text inputs (and the entire process can be repeated as many times as required)
+
+* Ability to Recognize a set of Words / Phrases and perform certain Actions Associated with those words / phrases
+
+ [brief list of Phrases and Associated Actions...]
+
+  -> date               =             reads out the current system date
+
+  -> time               =             reads out the current system time
+
+  -> joke =             tells a joke
+
+  -> news              =             gives news headlines (as per config)
+
+  -> weather =    gives Weather (as per config)
+
+  -> play <song> = plays song on youtube
+
+  -> info page <prog>  =  opens info page for 'prog'
+
+  -> man page <prog>  =  opens man page for 'prog'
+
+  -> Open in terminal <prog> = opens  'prog' in terminal
+
+  -> Open <prog>  =  opens 'prog' (without terminal)
+
+     {Instead of 'Open' - you may say 'launch', 'open', 'run' or 'start'}
+
+  -> Search Information <phrase> = Search 'phrase' in Google
+
+     {Instead of 'Search' - you may say 'find' or 'search'}
+
+     {Instead of 'information' - you may say 'info' or 'information'}

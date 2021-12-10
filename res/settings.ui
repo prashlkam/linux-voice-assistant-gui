@@ -81,6 +81,11 @@
    </item>
    <item>
     <property name="text">
+     <string>Lx-Qt</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>MATE</string>
     </property>
    </item>
@@ -97,6 +102,11 @@
    <item>
     <property name="text">
      <string>Unity</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Xfce</string>
     </property>
    </item>
   </widget>

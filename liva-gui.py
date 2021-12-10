@@ -24,14 +24,13 @@ class LinuxVoiceAssistant(QDialog):
 		self.liva_object = liva.LivaVoice()
 		
 	
-	
 	def copy_clpboard(self):
 		self.outputtext.selectAll()
 		self.outputtext.copy()
 	
 	def help_func(self):
 		# replace ls with man page for liva - TBD
-		os.popen("xterm -e man ls")
+		os.popen("xterm -hold -e man ls")
 	
 	def settings_func(self):
 		self.settings_dialog = liva_settings.Settings()
