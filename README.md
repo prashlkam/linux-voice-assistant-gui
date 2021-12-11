@@ -26,25 +26,25 @@ Liva provides a basic set of Voice Assistant capabilities including...
 
  [brief list of Phrases and Associated Actions...]
 
-  -> date               =             reads out the current system date
+  -> date =  reads out the current system date
 
-  -> time               =             reads out the current system time
+  -> time =  reads out the current system time
 
-  -> joke =             tells a joke
+  -> joke =  tells a joke
 
-  -> news              =             gives news headlines (as per config)
+  -> news =  gives news headlines (as per config)
 
-  -> weather =    gives Weather (as per config)
+  -> weather =  gives Weather (as per config)
 
-  -> play <song> = plays song on youtube
+  -> play <song> =  plays 'song' on youtube
 
-  -> info page <prog>  =  opens info page for 'prog'
+  -> info page <prog> =  opens info page for 'prog'
 
-  -> man page <prog>  =  opens man page for 'prog'
+  -> man page <prog> =  opens man page for 'prog'
 
-  -> Open in terminal <prog> = opens  'prog' in terminal
+  -> Open in terminal <prog> =  opens  'prog' in terminal
 
-  -> Open <prog>  =  opens 'prog' (without terminal)
+  -> Open <prog> =  opens 'prog' (without terminal)
 
      {Instead of 'Open' - you may say 'launch', 'open', 'run' or 'start'}
 
@@ -53,3 +53,46 @@ Liva provides a basic set of Voice Assistant capabilities including...
      {Instead of 'Search' - you may say 'find' or 'search'}
 
      {Instead of 'information' - you may say 'info' or 'information'}
+  -> Ask Questions like the ones shown below - and get answers for the same...
+     What is <term>
+     Where is <place>
+     Who is <person>
+     How to <action>
+
+     Note:- Questions such as Which and Why have not been included - as these questions can sometimes be subjective.
+
+    Answers to the available set of questions is fetched by doing a search on Google or a lookup in Wikipedia.
+
+
+INSTRUCTIONS FOR SETUP...
+--------------------------
+
+ * Packages that must be Installed on the system:
+  > python3 (if not already installed)
+  > python3-pip
+  > python3-pyaudio
+  > python3-portaudio
+  > espeak
+
+ * pip Packages that must be Installed on the system:
+  > pyaudio
+  > pywhatkit (requires internet connection
+  > pyttsx3
+  > speechrecognition
+  > pyjokes
+  > python-weather
+  > gnewsclient
+  > pyqt5
+  > datetime
+  > requests
+  > asyncio
+  > python-Levenshtein
+
+ * pip Packages that must be Excluded on the system:
+  > mouseinfo (if already installed - please Uninstall)
+
+
+Setup Process...
+-----------------
+
+
