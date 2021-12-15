@@ -49,7 +49,7 @@ class Settings(QDialog):
 		# term = self.params['Liva_options']['terminal_emulator']
 		term = 'xterm'
 		# cmd =  self.params['Liva_options']['text_editor'] + ' ' +  self.params['Liva_options']['config_file']
-		cmd = 'vim ~/.config/liva/liva-config.json'
+		cmd = 'vim ' + str(os.path.expanduser('~/.config/liva/liva-config.json'))
 		self.exec_cmd_settings(term + ' -hold -e ' + cmd)
 	
 	def open_sttconfig_mthd(self):

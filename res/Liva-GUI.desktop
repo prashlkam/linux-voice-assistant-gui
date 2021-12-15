@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Liva-GUI
 Comment=Liva Voice Assistant
-Exec=/usr/share/linux-voice-assistant/liva-gui.py
+Exec=liva-gui.py
 Icon=user
-Categories=Sound & Video;Voice assistant;
+Categories=Universal Access
 Terminal=false
 Type=Application
-Keywords=sound & video;universal access;voice assistant;
+Keywords=universal access;voice assistant;

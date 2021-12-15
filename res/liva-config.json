@@ -35,6 +35,14 @@
     "country": "India",
     "topic": "National",
     "max_count": "8"
+},
+"Pywhatkit_options" : {
+	"language": "en",
+	"wikipedia_summary_length": "3"
+},
+"Pyjokes_options" : {
+	"language": "en",
+	"category": "all"
 }
 }
 

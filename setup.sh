@@ -9,17 +9,17 @@
 
 
 # For Red Hat based distros...
-if ! [[dnf | grep -q 'command not found']]; then
+if ! [dnf | grep -q 'command not found']; then
     sudo dnf install -y python3-pip python3-pyaudio espeak
 fi	
 
 # For Debian based distros...
-if ! [[apt-get | grep -q 'command not found']]; then
+if ! [apt-get | grep -q 'command not found']; then
     sudo apt-get install -y python3-pip python3-pyaudio espeak
 fi
 
 # For Arch based distros...
-if ! [[pacman | grep -q 'command not found']]; then
+if ! [pacman | grep -q 'command not found']; then
     sudo pacman -Syy python3-pip python3-pyaudio espeak
 fi
 ## for all other distros

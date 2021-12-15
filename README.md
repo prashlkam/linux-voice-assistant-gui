@@ -1,14 +1,10 @@
-
-
-Liva (linux voice assistant)
-
+Liva (linux voice assistant GUI)
+================================
  
-
 linux-voice-assistant-gui - a utility that could mimic Cortana on the linux desktop...
 
- 
-
-Features:
+Features:-
+-----------
 
 Liva provides a basic set of Voice Assistant capabilities including...
 
@@ -54,14 +50,14 @@ Liva provides a basic set of Voice Assistant capabilities including...
 
      {Instead of 'information' - you may say 'info' or 'information'}
   -> Ask Questions like the ones shown below - and get answers for the same...
-     What is <term>
-     Where is <place>
-     Who is <person>
-     How to <action>
+     (A) What is <term>
+     (B) Where is <place>
+     (C) Who is <person>
+     (D) How to <action>
 
      Note:- Questions such as Which and Why have not been included - as these questions can sometimes be subjective.
 
-    Answers to the available set of questions is fetched by doing a search on Google or a lookup in Wikipedia.
+     Answers to the available set of questions is fetched by doing a search on Google or a lookup in Wikipedia.
 
 
 INSTRUCTIONS FOR SETUP...

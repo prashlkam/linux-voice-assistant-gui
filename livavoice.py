@@ -34,9 +34,11 @@ class LivaVoice():
 		self.audiofilename = os.path.expanduser(self.params['Pyaudio_options']['audio_file'])
 		self.pyaud = pyaudio.PyAudio()
 		
+	
 	def load_params(self):
 		with open(os.path.expanduser("~/.config/liva/liva-config.json"), 'r') as jsf:
 			self.params = json.load(jsf)
+		
 	
 	def recaudio(self, filename):
 		self.recording_flag = True
@@ -65,10 +67,12 @@ class LivaVoice():
 		wf.writeframes(b''.join(frames))
 		self.recording_flag = False
 		wf.close()
+		
 	
 	def talk(self, text):
 		self.engine.say(text)
 		self.engine.runAndWait()
+		
 	
 	def take_command(self):
 		self.command = ''
@@ -83,11 +87,13 @@ class LivaVoice():
 		except Exception as e:
 			print("Exception: " + str(e))
 		return self.command
+		
 	
 	def exec_cmd(self, command):
 		# executes final part of utterance
 		self.child_proc = subprocess.Popen(command, stdin=subprocess.PIPE)
 		self.talk('Executing ' + command)
+		
 	
 	def exec_cmd_term(self, command):
 		# executes final part of utterance
@@ -96,7 +102,7 @@ class LivaVoice():
 		self.child_proc = os.popen(term + ' -hold -e ' + command)
 		self.talk('Executing in terminal ' + command)
 		
-	# def weather_func(self, params):
+	
 	async def weather_func(self):
 		# declare the client. format defaults to metric system (celcius, km/h, etc.)
 		client = python_weather.Client(format=python_weather.IMPERIAL)
@@ -123,7 +129,7 @@ class LivaVoice():
 		await client.close()
 		return s
 		
-	# def news_func(self, params):
+	
 	def news_func(self):
 		# load params
 		newsopts = self.params['News_options']
@@ -138,6 +144,7 @@ class LivaVoice():
 		for i in titles:
 			s += i
 		return s
+		
 	
 	def liva_run(self, cmd):
 		self.command = cmd
@@ -183,17 +190,20 @@ class LivaVoice():
 			self.talk('playing ' + self.command)
 		elif 'who is' in self.command:
 			self.command = self.command.replace('who is ', '')
-			info = wikipedia.summary(self.command, 3)
+			wiki_smry_len = int(self.params['Pywhatkit_options']['wikipedia_summary_length'])
+			info = wikipedia.summary(self.command, wiki_smry_len)
 			self.resulttoshow = info
 			self.talk(info)
 		elif 'what is' in self.command:
 			self.command = self.command.replace('what is ', '')
-			info = wikipedia.summary(self.command, 3)
+			wiki_smry_len = int(self.params['Pywhatkit_options']['wikipedia_summary_length'])
+			info = wikipedia.summary(self.command, wiki_smry_len)
 			self.resulttoshow = info
 			self.talk(info)
 		elif 'where is' in self.command:
 			self.command = self.command.replace('where is ', '')
-			info = wikipedia.summary(self.command, 3)
+			wiki_smry_len = int(self.params['Pywhatkit_options']['wikipedia_summary_length'])
+			info = wikipedia.summary(self.command, wiki_smry_len)
 			self.resulttoshow = info
 			self.talk(info)
 		elif 'how to' in self.command:
@@ -250,6 +260,7 @@ class LivaVoice():
 		print('Result:\n--------\n' + self.resulttoshow)
 		return self.command, self.resulttoshow
 		
+	
 
 # main
 # lv = LivaVoice()
