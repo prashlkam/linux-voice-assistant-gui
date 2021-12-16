@@ -12,9 +12,14 @@ def main():
 	print('Press \'I\' or \'i\' for instructions...')
 	print('Press \'S\' or \'s\' for settings (requires vim)...')
 	print('Press \'Q\' or \'q\' to quit...')
-	print('Press any other key to continue looping...')
-	opt = input(' Now Press <enter> to begin: ')
-		 
+	print('Press any other key followed by <enter> to continue looping...')
+	opt = input(' Now Press \'c\' and <enter> to begin | \'q\' and <enter> to Quit: ')
+	if 'q' in opt.lower():
+		exit()
+	elif opt == '':
+		opt  = 'c'
+	else:
+		opt = 'c'
 	while not 'q' in opt[0].lower():
 		liva_obj = liva.LivaVoice()
 		os.system('clear')
@@ -25,23 +30,29 @@ def main():
 		print('\nWhat do you want to do with the Speech converted to Text? : ')
 		print('Press \'r\' to Run | \'a\' to Append to File | \'i\' for Instructions\n	  \'s\' for Settings | \'t\' to type Command\n	  \'q\' to Quit | Any other key to continue...')
 		opt = input('Enter your choice: ')
+		if opt == '':
+			opt = 'c'
 		if 'r' in opt[0].lower():
-			liva_obj.run_liva(cmd)
+			liva_obj.liva_run(cmd)
 		elif 't' in opt[0].lower():
 			cmd = input('Type in the Command for Liva: ')
-			liva_obj.run_liva(cmd)
+			liva_obj.liva_run(cmd)
 		elif 'a' in opt[0].lower():
 			append_file(cmd)
 		elif 'i' in opt[0].lower():
 			info_func()
 		elif 's' in opt[0].lower():
-			settings_func()
+			term = liva_obj.params['Liva_options']['terminal_emulator']
+			editor = liva_obj.params['Liva_options']['text_editor']
+			config_file = liva_obj.params['Liva_options']['config_file']
+			settings_func(term, editor, config_file)
 		elif 'q' in opt[0].lower():
 			exit()
 		else:
-			input('Press <enter> to clear the Screen and proceed...')
-			os.system('clear')
-
+			opt = 'c'
+		input('\nPress <enter> when you\'re ready to continue...')
+		
+	
 def append_file(cmd):
 	print('Appending text to file \'~/Documents/liva-conv01.txt\'...')
 	with open(os.path.expanduser('~/Documents/liva-conv01.txt'),'a') as outfile:
@@ -58,10 +69,9 @@ def info_func():
 	print('7/ You may report any issues / problems / bugs etc. on github. Or you may fork the project and improve it further. ')
 	print('Last but not least - I created Liva in order to address a very specific gap in Linux. I hope some of you will find my work useful in some way - and the idea behind this app survives and becomes better over time... Thank you for using Liva... :) ')
 
-def settings_func():
+def settings_func(term, editor, config_file):
 	print('Opening Settings file...')
-	term = 'xterm '
-	cmd = ' vim ~/.config/liva/liva-config.json'
+	cmd = ' ' + editor + ' ' + str(os.path.expanduser(config_file))
 	os.popen(term + ' -hold -e ' + cmd)
 
 main()
