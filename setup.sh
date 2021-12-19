@@ -59,6 +59,3 @@ sudo chmod +x  /usr/share/linux-voice-assistant/liva-cli.py
 sudo cp ./res/Liva-GUI.desktop  /usr/share/applications
 
 clear
-
-
-

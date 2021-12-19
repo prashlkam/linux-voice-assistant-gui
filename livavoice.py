@@ -60,7 +60,9 @@ class LivaVoice():
 		self.pyaud.terminate()
 		print('Finished recording...')
 		# Save the recorded data as a WAV file
-		wf = wave.open(self.audiofilename, 'wb')
+		if filename == '':
+			filename = self.audiofilename
+		wf = wave.open(filename, 'wb')
 		wf.setnchannels(self.channels)
 		wf.setsampwidth(self.pyaud.get_sample_size(self.sample_format))
 		wf.setframerate(self.fs)
