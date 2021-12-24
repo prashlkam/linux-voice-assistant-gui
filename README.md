@@ -64,31 +64,60 @@ INSTRUCTIONS FOR SETUP...
 --------------------------
 
  * Packages that must be Installed on the system:
-  > python3 (if not already installed)
-  > python3-pip
-  > python3-pyaudio
-  > python3-portaudio
-  > espeak
+  -> python3 (if not already installed)
+  -> python3-pip
+  -> python3-pyaudio
+  -> python3-portaudio
+  -> espeak
 
  * pip Packages that must be Installed on the system:
-  > pyaudio
-  > pywhatkit (requires internet connection
-  > pyttsx3
-  > speechrecognition
-  > pyjokes
-  > python-weather
-  > gnewsclient
-  > pyqt5
-  > datetime
-  > requests
-  > asyncio
-  > python-Levenshtein
+  -> pyaudio
+  -> pywhatkit (requires internet connection)
+  -> pyttsx3
+  -> speechrecognition
+  -> pyjokes
+  -> python-weather
+  -> gnewsclient
+  -> pyqt5
+  -> datetime
+  -> requests
+  -> asyncio
+  -> python-Levenshtein
 
  * pip Packages that must be Excluded on the system:
-  > mouseinfo (if already installed - please Uninstall)
+  -> mouseinfo (if already installed - please Uninstall)
 
 
 Setup Process...
 -----------------
 
+1/ do a git clone of the project...
+  $ git clone https://github.com/prashlkam/linux-voice-assistant-gui
 
+2/ cd into the project dir...
+  $ cd ./linux-voice-assistant-gui
+
+3/ run the 'setup.sh' shell script...
+  $ ./setup.sh
+
+4/ when prompted, give your sudo password...
+
+5/ when asked if you wish to continue - type 'y' to proceed further...
+[selecting 'n' here could result in an improper installation]
+
+6/ shortly thereafter, the screen would clear. Now you can start using Liva.
+
+[
+ Note:-
+  * this setup script covers the following distros...
+    -> Red Hat's rpm based distros
+    -> almost all debian based distros
+    -> Arch based distros
+
+    (if you use any other distro - feel free to edit the 'setup.sh' shell script)
+
+  * if you see errors during the setup process - some of the packages may not be installed correctly on your system. In such a case, it's advised that you manually remove the residual files from your system.
+
+
+
+]
