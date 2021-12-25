@@ -73,7 +73,7 @@ INSTRUCTIONS FOR SETUP...
 
  * pip Packages that must be Installed on the system:
    - pyaudio
-   - pywhatkit (requires internetm connection)
+   - pywhatkit (requires internet connection)
    - pyttsx3
    - speechrecognition
    - pyjokes
@@ -94,15 +94,15 @@ Setup Process...
 
 1/ do a git clone of the project...
  ```
-  $ git clone https://github.com/prashlkam/linux-voice-assistant-gui
+   git clone https://github.com/prashlkam/linux-voice-assistant-gui
  ```
 2/ cd into the project dir...
  ```
-  $ cd ./linux-voice-assistant-gui
+   cd ./linux-voice-assistant-gui
  ```
 3/ run the 'setup.sh' shell script...
  ``` 
-  $ ./setup.sh
+   ./setup.sh
  ```
 4/ when prompted, give your sudo password...
 
