@@ -40,8 +40,15 @@ fi
 
 ## same commands for all distros
 ## =================================
+
+## pip pkgs istall
+## -----------------
+
 pip -q install speechrecognition pyttsx3 pyqt5 pyaudio pywhatkit pyjokes datetime requests gnewsclient asyncio python-weather python-Levenshtein
 pip -q uninstall mouseinfo
+
+## configuration 
+## --------------
 
 clear
 
